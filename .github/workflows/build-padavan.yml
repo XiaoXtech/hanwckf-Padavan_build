@@ -38,19 +38,19 @@ jobs:
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
-        TNAME: DIR-878-5.0
+        TNAME: DIR-878
       run: |
-        cd /opt/rt-n56u/trunk
-        if [ ! -f configs/templates/$TNAME.config ] ; then
-        echo "configs/templates/$TNAME.config not found "
+        cd /opt/rt-n56u/trunk/configs/templates/
+        if [ ! -f DIR-878.config ] ; then
+        echo "configs/templates/DIR-878.config not found "
         exit 1
         fi
-        sudo ./clear_tree
-        sudo ./build_firmware_modify $TNAME 0
+        cd /opt/rt-n56u/trunk
+        fakeroot ./build_firmware_modify DIR-878
         sudo mv -f images/*.trx /opt/images/
     - name : Upload packages
       uses: actions/upload-artifact@master
       if: always()
       with:
-        name: Padavan-packages
+        name: DIR-878_H-Padavan-packages
         path: /opt/images
